@@ -11,22 +11,50 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        <Border x:Name ="border"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="10"
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Green"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="Black"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="Blue"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="Yellow"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Purple"></Setter>
+                                <Setter TargetName="border" Property="Background" Value="Gray"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
         </Style>
 
         <ControlTemplate x:Key="CustomComboItem" TargetType="{x:Type ComboBoxItem}">
-            <TextBlock Text="{Binding Value}"
+            <TextBlock x:Name="txt"
+                       Text="{Binding Value}"
                        Foreground="{Binding Brush}">
             </TextBlock>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter TargetName="txt" Property="Background" Value="Aqua"></Setter>
+                    <Setter TargetName="txt" Property="Foreground" Value="Green"></Setter>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter TargetName="txt" Property="Background" Value="Peru"></Setter>
+                    <Setter TargetName="txt" Property="Foreground" Value="Purple"></Setter>
+                </Trigger>
+            </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
 
@@ -72,6 +100,18 @@
                 Margin="10"
                 FontSize="30"
                 Content="Property Trigger">
+            <Button.Resources>
+                <Style TargetType="{x:Type Button}" >
+                    <Setter Property="Foreground" Value="Blue"/>
+                    <Setter Property="Background" Value="HotPink"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="Background" Value="Black"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
         </Button>
     </Grid>
 </Window>
